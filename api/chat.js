@@ -44,7 +44,7 @@ ${produtos ? `Produtos encontrados:\n${produtos}\n` : ''}
 Pergunta do cliente: """${message}"""
 
 Responda de forma simpática, objetiva e comercial, como um vendedor treinado e experiente.
-    `;
+`;
 
     const apiResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
