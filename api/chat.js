@@ -6,12 +6,11 @@ export default async function handler(req, res) {
   try {
     const { message, produtos } = req.body;
 
-    // Verifique se a mensagem existe
     if (!message) {
       return res.status(400).json({ error: 'Mensagem é obrigatória' });
     }
 
-    const prompt = 
+    const prompt = `
 Você é Markito - vendedor da Marques Vendas PMG.
 
 Regras IMPORTANTES:
@@ -20,11 +19,12 @@ Regras IMPORTANTES:
 3. Para ver preços, cliente deve fazer login no site (cadastro rápido em 2 minutos)
 4. Nunca peça dados de cartão ou aceite pagamento antecipado
 
-${produtos ? Produtos encontrados:\n${produtos}\n : ''}
+${produtos ? `Produtos encontrados:\n${produtos}\n` : ''}
 
 Pergunta do cliente: """${message}"""
 
-Responda de forma simpática, objetiva e comercial.;
+Responda de forma simpática, objetiva e comercial.
+    `;
 
     const apiResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -38,7 +38,6 @@ Responda de forma simpática, objetiva e comercial.;
       })
     });
 
-    // Verifique se a resposta da API é válida
     if (!apiResponse.ok) {
       const errorText = await apiResponse.text();
       console.error('Erro na API OpenRouter:', errorText);
